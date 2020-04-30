@@ -2,12 +2,16 @@ import User from '../models/User';
 
 class UserController {
   async store(req, res) {
-    const { email } = req.body;
+    const { email, password } = req.body;
 
     const checkEmail = await User.findOne({
       where: { email },
       attributes: ['email'],
     });
+
+    if (!password) {
+      return res.status(400).json({ error: 'User does not have password' });
+    }
 
     if (checkEmail) {
       return res.status(400).json({ error: 'User already exist' });

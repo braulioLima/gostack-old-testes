@@ -20,6 +20,19 @@ describe('User', () => {
     expect(body).toHaveProperty('id');
   });
 
+  it('Should not be ale to register without password', async () => {
+    const user = await factory.attrs('User');
+
+    delete user.password;
+
+    const { status, body } = await request(app)
+      .post('/users')
+      .send(user);
+
+    expect(status).toBe(400);
+    expect(body).toHaveProperty('error');
+  });
+
   it('Should not be able to register with duplicated email', async () => {
     const user = await factory.attrs('User');
 

@@ -1,5 +1,7 @@
 import database from '../../src/database';
 
+test.skip('skip truncate', () => {});
+
 function truncate() {
   const { models } = database.connection;
   return Promise.all(
